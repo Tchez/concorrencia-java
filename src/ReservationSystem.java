@@ -7,7 +7,7 @@ public class ReservationSystem {
         this.movieTheater = movieTheater;
     }
 
-    public void makeReservation(int roomIndex, String position) {
+    public boolean makeReservation(int roomIndex, String position) {
         try {
             Room room = movieTheater.getRooms().get(roomIndex);
 
@@ -16,17 +16,20 @@ public class ReservationSystem {
                     room.reserveSeat(position);
                     System.out.println(
                             "[" + Thread.currentThread().getName() + "] Seat " + position + " has been reserved.");
+                    return true;
                 } else {
                     System.out.println(
                             "[" + Thread.currentThread().getName() + "] Seat " + position + " is already taken.");
+                    return false;
                 }
             }
         } catch (IndexOutOfBoundsException e) {
             System.out.println("Wrong room index!" + e);
+            return false;
         }
     }
 
-    public void cancelReservation(int roomIndex, String position) {
+    public boolean cancelReservation(int roomIndex, String position) {
         try {
             Room room = movieTheater.getRooms().get(roomIndex);
 
@@ -35,13 +38,16 @@ public class ReservationSystem {
                     room.cancelSeatReservation(position);
                     System.out.println(
                             "[" + Thread.currentThread().getName() + "] Seat " + position + " has been canceled.");
+                    return true;
                 } else {
                     System.out.println(
                             "[" + Thread.currentThread().getName() + "] Seat " + position + " is already empty.");
+                    return false;
                 }
             }
         } catch (IndexOutOfBoundsException e) {
             System.out.println("Wrong room index!" + e);
+            return false;
         }
     }
 }
