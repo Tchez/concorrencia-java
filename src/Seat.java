@@ -1,8 +1,8 @@
 package src;
 
 public class Seat {
-    private String row;
-    private int number;
+    private final String row;
+    private final int number;
     private boolean isEmpty;
 
     public Seat(String row, int number) {
@@ -15,11 +15,11 @@ public class Seat {
         return row + number;
     }
 
-    public boolean isEmpty() {
+    public synchronized boolean isEmpty() {
         return isEmpty;
     }
 
-    public void setEmpty(boolean empty) {
+    public synchronized void setEmpty(boolean empty) {
         isEmpty = empty;
     }
 }
