@@ -8,7 +8,7 @@ public class Seat {
     public Seat(String row, int number) {
         this.row = row;
         this.number = number;
-        this.isEmpty = false;
+        this.isEmpty = true;
     }
 
     public String getPosition() {
