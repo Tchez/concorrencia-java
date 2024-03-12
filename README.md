@@ -2,47 +2,51 @@
 
 ## Sobre o Projeto
 
-Este projeto é uma implementação de um sistema de reserva de assentos para cinema, desenvolvido como parte do meu estudo para a disciplina de Sistemas Paralelos e Distribuídos. O objetivo deste projeto é aplicar conceitos de concorrência, threads e sincronização em Java, utilizando o modificador `synchronized` para garantir a segurança das threads durante as reservas de assentos.
+Este projeto implementa um sistema de reserva de assentos para cinema em Java, desenvolvido como um desafio prático para a disciplina de Sistemas Paralelos e Distribuídos. O objetivo é explorar e aplicar conceitos de programação concorrente, como threads, sincronização e locks explícitos, para gerenciar o acesso concorrente a recursos compartilhados (neste caso, os assentos do cinema) de forma segura e eficaz.
 
-A motivação por trás deste projeto é aprofundar meu entendimento sobre programação concorrente e explorar desafios comuns enfrentados ao desenvolver sistemas que requerem sincronização e gestão de estado compartilhado entre múltiplas threads.
+A motivação por trás deste desafio é aprofundar o entendimento sobre como desenvolver sistemas que requerem sincronização fina e gerenciamento de estado compartilhado em um ambiente multithread, enfrentando e superando os desafios comuns associados à concorrência.
 
-## Funcionalidades
+## Desafio
 
-O sistema oferece as seguintes funcionalidades:
+O principal desafio é garantir que, em um ambiente com múltiplas threads tentando reservar assentos simultaneamente, nenhuma condição de corrida ocorra, e cada assento possa ser reservado por apenas um "usuário" por vez. Além disso, o sistema deve permitir o cancelamento de reservas, mantendo a integridade e consistência do estado dos assentos através de todas as operações concorrentes.
 
-- **Reserva de Assentos:** Permite a reserva de assentos disponíveis numa sala de cinema.
-- **Verificação de Disponibilidade:** Verifica se um determinado assento está disponível para reserva.
-- **Cancelamento de Reservas:** Permite cancelar uma reserva, liberando o assento para ser reservado por outro usuário.
+## Estratégia de Solução
 
-## Como Executar
+Para enfrentar esse desafio, o projeto envolve algumas estratégias chave:
 
-Para executar este projeto, você precisará ter o Java instalado em sua máquina. Siga os passos abaixo:
+- **Uso de Locks Explícitos (`ReentrantLock`):** Para garantir a exclusividade do acesso aos assentos durante as operações de reserva e cancelamento, evitando sobreposições nas modificações do estado dos assentos.
 
-1. Clone este repositório para sua máquina local usando `git clone https://github.com/Tchez/concorrencia-java.git`.
-2. Navegue até a pasta do projeto.
-3. Compile o código com `javac NomeDoArquivo.java`.
-4. Execute o programa com `java NomeDaClassePrincipal`.
+- **Simulação de Concorrência com Variação de Comportamento:** Cada thread simula um usuário tentando fazer uma reserva, introduzindo um atraso aleatório no início de suas operações para emular o comportamento variado de usuários em um sistema real.
 
-## Estrutura do Projeto
+- **Cancelamento Condicionado pela Reserva:** Uma thread que consegue reservar um assento espera um breve intervalo antes de cancelar sua reserva, simulando um cenário onde reservas são reconsideradas ou ajustadas.
 
-O projeto é estruturado da seguinte forma:
+### Componentes Principais
 
-- `Cinema.java`: Representa o cinema e contém as salas de exibição.
-- `Sala.java`: Representa uma sala de exibição dentro do cinema.
-- `Assento.java`: Representa um assento na sala de exibição.
-- `SistemaDeReserva.java`: Contém a lógica de negócios para a reserva de assentos.
+- `Main.java`: Configura e inicia a simulação, criando threads que representam usuários tentando reservar o mesmo assento em intervalos aleatórios.
+
+- `MovieTheater.java`: Representa o cinema e contém uma lista de salas de exibição.
+
+- `Room.java`: Modela uma sala de cinema, gerenciando um conjunto de assentos e fornecendo métodos sincronizados para operações de reserva e cancelamento.
+
+- `Seat.java`: Representa um assento individual na sala de cinema, incluindo informações sobre seu estado de reserva.
+
+- `ReservationSystem.java`: Fornece uma interface para as ações de reserva e cancelamento, interagindo com as salas e assentos para atualizar seus estados.
+
+- `ReservationTask.java`: Executa a lógica para tentar reservar um assento específico, introduzindo variação nos tempos de ação através de atrasos aleatórios e executando cancelamento após a reserva bem-sucedida.
 
 ## Desafios e Aprendizados
 
-Durante o desenvolvimento deste projeto, enfrentei diversos desafios, especialmente relacionados à garantia de que o sistema seja thread-safe e à prevenção de condições de corrida. Utilizar o modificador `synchronized` para sincronizar o acesso a blocos de código críticos foi fundamental para resolver esses desafios. Este projeto me permitiu compreender melhor a importância da sincronização em sistemas que operam em ambientes concorrentes.
+A implementação deste sistema revelou a complexidade do gerenciamento de estados compartilhados em ambientes concorrentes, destacando a importância de estratégias de sincronização eficazes e o uso cuidadoso de locks para prevenir condições de corrida e garantir a segurança das threads.
+
+## Como Executar
+
+1. Clone o repositório para sua máquina local.
+2. Compile o código usando `javac src/*.java` dentro do diretório do projeto.
+3. Execute o programa com `java src.Main`.
 
 ## Contribuições
 
-Sugestões de melhorias e contribuições são sempre bem-vindas! Sinta-se à vontade para fazer um fork do projeto e enviar um pull request com suas sugestões.
-
-## Licença
-
-Este projeto está licenciado sob a Licença MIT - veja o arquivo LICENSE.md para detalhes.
+Feedback e contribuições são bem-vindos para aprimorar a eficácia e a eficiência do sistema de reserva de assentos :)
 
 ## Contato
 
